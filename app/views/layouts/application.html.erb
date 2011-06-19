@@ -10,7 +10,7 @@
 <div id="container">
   <div id="user_nav">
     <% if current_user %>
-      Logged in as <%= current_user.email %>.
+      Hello! | 
       <%= link_to "Log out", log_out_path %>
     <% else %>
       <%= link_to "Sign up", sign_up_path %> or
@@ -24,6 +24,6 @@
 
   <%= yield %>
 </div>
-<%= debug params %>
+<%= debug(params) if Rails.env.development? %>
 </body>
 </html>
