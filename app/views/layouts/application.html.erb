@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Auth</title>
-  <%= stylesheet_link_tag :all %>
+  <title><%= content_for?(:title) ? yield(:title) : "Auth by bsodmike" %></title>
+  <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
+  <%= yield(:head) %>  
 </head>
 <body>
 <div id="container">
   <div id="user_nav">
     <% if current_user %>
-      Hello! | 
-      <%= link_to "Log out", log_out_path %>
+      <% unless current_user.email.nil? %>
+        Signed in as <%= current_user.email %>.<br />
+      <% end %>
+      Not you? <%= link_to "Sign out", log_out_path %>
     <% else %>
-      <%= link_to "Sign up", sign_up_path %> or
-      <%= link_to "log in", log_in_path %>
+      <%= link_to "Sign In", authentications_path %>
     <% end %>
   </div>
 

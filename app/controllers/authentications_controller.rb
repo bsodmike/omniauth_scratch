@@ -6,6 +6,7 @@ class AuthenticationsController < ApplicationController
   def create
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
+    # if authentication exists, sign in that user (as per Railscast)    
     if authentication
       flash[:notice] = "Signed in successfully."
       session[:user_id] = authentication.user_id

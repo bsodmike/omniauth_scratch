@@ -1,4 +1,4 @@
-<% content_for :title, "Sign In" %>
+<% content_for :title, "Sign In Options" %>
 
 <% if @authentications %>
   <% unless @authentications.empty? %>
@@ -7,7 +7,7 @@
       <% for authentication in @authentications %>
         <div class="authentication">
           <%= image_tag "https://github.com/intridea/authbuttons/raw/master/png/#{authentication.provider}_32.png", :size => "32x32" %>
-          <div class="provider"><%= authentication.provider.titleize %></div>
+          <div class="provider"><%= authentication.provider_name %></div>
           <div class="uid"><%= authentication.uid %></div>
           <%= link_to "X", authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove" %>
         </div>
@@ -37,3 +37,11 @@
   OpenID
 </a>
 <div class="clear"></div>
+
+<% unless current_user %>
+  <p>
+    <strong>Don't use these services?</strong>
+    <%= link_to "Sign up", sign_up_path %> or
+    <%= link_to "sign in", log_in_path %> with a password.
+  </p>
+<% end %>
