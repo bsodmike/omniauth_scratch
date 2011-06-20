@@ -6,8 +6,15 @@ class AuthenticationsController < ApplicationController
   def create
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
+    # give a user account priority over authentications; therefore, 
+    # merge the authentication with the signed in account.
+    if current_user && authentication
+      authentication.update_attribute(:user_id, current_user.id)
+      session[:user_id] = current_user.id
+      flash[:notice] = "Successfully authenticated with #{omniauth['provider']}!"
+      redirect_to authentications_url    
     # if authentication exists, sign in that user (as per Railscast)    
-    if authentication
+    elsif authentication
       flash[:notice] = "Signed in successfully."
       session[:user_id] = authentication.user_id
       redirect_to authentications_url
