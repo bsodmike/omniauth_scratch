@@ -14,9 +14,11 @@
       <% unless current_user.email.nil? %>
         Signed in as <%= current_user.email %>.<br />
       <% end %>
-      Not you? <%= link_to "Sign out", log_out_path %>
+      Not you? <%= link_to "Sign out", sign_out_path %>
     <% else %>
-      <%= link_to "Sign In", authentications_path %>
+      Sign in via <%= link_to "Twitter", "auth/twitter" %> or 
+      <%= link_to "with a password", sign_in_path %><br/>
+      Want an account? Click here to <%= link_to "sign up", sign_up_path %>.
     <% end %>
   </div>
 

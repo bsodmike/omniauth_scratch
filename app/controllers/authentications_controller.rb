@@ -9,6 +9,7 @@ class AuthenticationsController < ApplicationController
     # give a user account priority over authentications; therefore, 
     # merge the authentication with the signed in account.
     if current_user && authentication
+      User.delete(authentication.user.id) # delete prior user account to free up email address
       authentication.update_attribute(:user_id, current_user.id)
       session[:user_id] = current_user.id
       flash[:notice] = "Successfully authenticated with #{omniauth['provider']}!"
@@ -20,7 +21,7 @@ class AuthenticationsController < ApplicationController
       redirect_to authentications_url
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
-      flash[:notice] = "Authentication successful."
+      flash[:notice] = "Successfully added #{omniauth['provider']} authentication to your account."
       redirect_to authentications_url
     else
       user = User.new

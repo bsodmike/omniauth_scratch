@@ -11,6 +11,9 @@ class SessionsController < ApplicationController
       flash.now.alert = "Invalid email or password"
       render "new"
     end
+  rescue BCrypt::Errors::InvalidSalt    
+    flash[:error] = "Invalid password! You need to create an account."
+    redirect_to sign_up_path
   end
   
   def destroy
