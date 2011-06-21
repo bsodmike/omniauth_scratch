@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :handle_signed_in, :only => [:new]
+  
   def new
     @user = User.new
     apply_omniauth_and_check_validations
@@ -23,5 +25,4 @@ class UsersController < ApplicationController
         @user.valid?
       end
     end
-
 end

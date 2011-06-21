@@ -12,4 +12,11 @@ class ApplicationController < ActionController::Base
     def user_signed_in?
       return 1 if current_user 
     end
+    
+    def handle_signed_in
+      if user_signed_in?
+        flash[:alert] = "You are already signed in"
+        redirect_to root_url # halts request cycle
+      end
+    end    
 end
