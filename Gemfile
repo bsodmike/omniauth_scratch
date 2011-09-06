@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.9'
+gem 'rails', '3.0.10'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -9,8 +9,17 @@ gem 'sqlite3'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'omniauth', '0.2.0'
 
+gem "rspec-rails", :group => [:test, :development]
+
 group :development do
   gem 'nifty-generators'
+end
+
+group :test do
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "guard-rspec"
+  gem "rb-fsevent"
 end
 
 # Use unicorn as the web server

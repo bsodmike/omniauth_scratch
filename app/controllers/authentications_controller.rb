@@ -11,13 +11,13 @@ class AuthenticationsController < ApplicationController
     if current_user && authentication
       User.delete(authentication.user.id) # delete prior user account to free up email address
       authentication.update_attribute(:user_id, current_user.id)
-      session[:user_id] = current_user.id
+      cookies[:auth_token] = current_user.auth_token
       flash[:notice] = "Successfully authenticated with #{omniauth['provider']}!"
       redirect_to authentications_url    
     # if authentication exists, sign in that user (as per Railscast)    
     elsif authentication
       flash[:notice] = "Signed in successfully."
-      session[:user_id] = authentication.user_id
+      cookies[:auth_token] = authentication.user.auth_token
       redirect_to authentications_url
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
@@ -28,7 +28,7 @@ class AuthenticationsController < ApplicationController
       user.apply_omniauth(omniauth)
       if user.save
         flash[:notice] = "Your account has been created and you have been signed in!"
-        session[:user_id] = user.id
+        cookies[:auth_token] = user.auth_token
         redirect_to root_url
       else
         session[:omniauth] = omniauth.except('extra')

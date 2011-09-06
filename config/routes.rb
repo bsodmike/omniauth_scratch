@@ -1,4 +1,5 @@
 Auth::Application.routes.draw do
+
   match '/auth/:provider/callback' => 'authentications#create'
   match '/auth/failure' => 'authentications#failure'
   match "/sign_out" => "sessions#destroy", :as => "sign_out"
@@ -8,4 +9,5 @@ Auth::Application.routes.draw do
   resources :users
   resources :sessions
   resources :authentications
+  resources :password_resets
 end
