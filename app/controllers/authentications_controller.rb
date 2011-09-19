@@ -9,9 +9,10 @@ class AuthenticationsController < ApplicationController
     # give a user account priority over authentications; therefore, 
     # merge the authentication with the signed in account.
     if current_user && authentication
-      User.delete(authentication.user.id) # delete prior user account to free up email address
-      authentication.update_attribute(:user_id, current_user.id)
-      cookies[:auth_token] = current_user.auth_token
+      u = User.find(current_user.id).dup # generates a new token
+      cookies[:auth_token] = u.auth_token
+      authentication.update_attribute(:user_id, u.id)
+            
       flash[:notice] = "Successfully authenticated with #{omniauth['provider']}!"
       redirect_to authentications_url    
     # if authentication exists, sign in that user (as per Railscast)    

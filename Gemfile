@@ -7,7 +7,7 @@ gem 'rails', '3.0.10'
 
 gem 'sqlite3'
 gem 'bcrypt-ruby', :require => 'bcrypt'
-gem 'omniauth', '0.2.0'
+gem 'omniauth'
 
 gem "rspec-rails", :group => [:test, :development]
 

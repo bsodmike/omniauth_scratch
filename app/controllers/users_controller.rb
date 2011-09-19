@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     apply_omniauth_and_check_validations
     if @user.save
       session[:omniauth] = nil unless @user.new_record? # once saved clear :omniauth
-      session[:user_id] = @user.id # signin the new user
+      cookies[:auth_token] = @user.auth_token # signin the new user
       redirect_to root_url, :notice => "Signed up!"
     else
       render "new"
