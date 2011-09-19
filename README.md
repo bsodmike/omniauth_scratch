@@ -6,7 +6,7 @@ This is based on implementing Omniauth thanks to the excellent two-part Railscas
 
 The app allows users to either authenticate (and create a user with an associated authentication) or sign up for an account with password access.  This concept has been built upon as
 
-* If a user authenticates against a service and later signs up for a regular account, re-authentication will merge the authentication with the current user account and delete the prior account.  The prior account is deleted as a measure to ensure that email isn't taken up in the app as this is validated for uniqueness in its model.
+* If a user authenticates against a service and later signs up for a regular account, re-authentication will merge the authentication with the current user account <del>and delete the prior account.  The prior account is deleted as a measure to ensure that email isn't taken up in the app as this is validated for uniqueness in its model</del> .
 * New accounts created as a result of simply authenticating with a service are subjected to model validations and prompts for an email address — the password and password_hash fields remain as nil.
 * Accounts only created against an authentication are only allowed to delete their authentication if they have more than one (as their password & hash are nil)
 * Since the password/hash fields are nil for accounts created purely against an authentication, logging in with just the email (blank password & confirmation) raises a `BCrypt::Errors::InvalidSalt` exception.  This is rescued to route to the sign up path with an appropriate message.
@@ -36,4 +36,4 @@ Here's thanking those that have inspired and assisted, in no particular order.
 * ...anyone I may have forgotten to mention.
 
 ## License
-Auth is licensed under the MIT License.
+Multi-Auth (Omniauth-scratch) is Copyright (c) 2010-2011 [Michael de Silva](http://www.bsodmike.com) ([@bsodmike](https://twitter.com/#!/bsodmike) &amp; [G+](https://plus.google.com/102197309611185157885/posts)), and is released under MIT License.
