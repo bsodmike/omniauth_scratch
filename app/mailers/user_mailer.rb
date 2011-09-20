@@ -1,5 +1,4 @@
 class UserMailer < ActionMailer::Base
-  default_url_options[:host] = "localhost"
   default :from => "from@example.com"
 
   def password_reset(user)
